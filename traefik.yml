@@ -1,7 +1,7 @@
 version: '3.8'		
  services:		
    osmproxy:		
-     image: pastvu/osm		
+     image: pastvu/tileproxy		
      networks:		
        - traefik-public		
      deploy:		
