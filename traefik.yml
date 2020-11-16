@@ -1,0 +1,23 @@
+version: '3.8'		
+ services:		
+   osmproxy:		
+     image: pastvu/osm		
+     networks:		
+       - traefik-public		
+     deploy:		
+       placement:		
+         constraints:		
+           - node.labels.osm.osm-data == true		
+       labels:		
+         - traefik.enable=true		
+         - traefik.docker.network=traefik-public		
+         - traefik.constraint-label=traefik-public		
+         - traefik.http.routers.osmproxy-https.rule=Host(`${DOMAIN}`)		
+         - traefik.http.routers.osmproxy-https.entrypoints=https		
+         - traefik.http.routers.osmproxy-https.tls=true		
+         - traefik.http.routers.osmproxy-https.tls.certresolver=le		
+         - traefik.http.services.osmproxy.loadbalancer.server.port=80		
+
+  networks:		
+   traefik-public:		
+     external: true
